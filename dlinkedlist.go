@@ -89,23 +89,24 @@ func (item *ListItem) Prev() *ListItem {
 }
 
 func (item *ListItem) Remove() error {
-	if item != nil {
-		if item.prev != nil {
-			item.prev.next = item.next
-		} else {
-			item.list.first = item.next
-		}
-
-		if item.next != nil {
-			item.next.prev = item.prev
-		} else {
-			item.list.last = item.prev
-		}
-
-		if item.list.len > 0 {
-			item.list.len--
-		}
-		return nil
+	if item == nil {
+		return errors.New("can't delete empty element")
 	}
-	return errors.New("can't delete empty element")
+
+	if item.prev != nil {
+		item.prev.next = item.next
+	} else {
+		item.list.first = item.next
+	}
+
+	if item.next != nil {
+		item.next.prev = item.prev
+	} else {
+		item.list.last = item.prev
+	}
+
+	if item.list.len > 0 {
+		item.list.len--
+	}
+	return nil
 }
